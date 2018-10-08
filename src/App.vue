@@ -1,28 +1,41 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <WindowFrame/>
+    <StateBar/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Drive from './objects/Drive.js'
+import StateBar from './components/StateBar.vue'
+import WindowFrame from './components/WindowFrame.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    StateBar,
+    WindowFrame
+  },
+  data: () => ({
+    software: Drive.loadDefaultSoftware(),
+    opened: ["Hola"]
+  }),
+  mounted: function () {
   }
 }
 </script>
 
 <style>
+*{
+  padding: 0;
+  margin: 0;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-image: url('./assets/img/bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
 }
 </style>
