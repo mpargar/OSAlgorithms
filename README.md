@@ -1,6 +1,6 @@
 # so-algorithms
 
-## On development
+### On development
 
 Windows 10 simulation, built in electron and vue. This program explains how some simple OS algorithms works (just for educational purposes).
 
