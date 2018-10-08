@@ -1,5 +1,9 @@
 # so-algorithms
 
+## On development
+
+Windows 10 simulation, built in electron and vue. This program explains how some simple OS algorithms works (just for educational purposes).
+
 ## Project setup
 ```
 npm install
@@ -7,20 +11,5 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
+npm run serve:electron
 ```
