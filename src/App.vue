@@ -1,6 +1,14 @@
 <template>
   <div id="app">
-    <WindowFrame/>
+    <WindowFrame
+      :config="{
+        title: 'Sin título',
+        icon: 'mc.png',
+        width: 500,
+        height: 500,
+        posx: 0,
+        posy: 0,
+      }"/>
     <StateBar/>
   </div>
 </template>

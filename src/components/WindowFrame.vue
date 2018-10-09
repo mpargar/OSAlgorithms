@@ -1,5 +1,5 @@
 <template>
-    <div class="window" ref="windowFrame">
+    <div class="window" ref="windowFrame" :style="`top: ${config.posy}px; left: ${config.posx}px; width: ${config.width}px; height: ${config.height}px;`">
       <!-- Barra -->
         <div class="windowBar" ref="windowFrameHeader">
           <!--  -->
@@ -37,9 +37,7 @@
             </ul>
         </div>
         <div class="windowBody">
-            <div>
-                COntenido perron
-            </div>
+            <img :src="require(`@/assets/icons/${config.icon}`)">
         </div>
     </div>
 </template>
@@ -48,22 +46,21 @@
 /* eslint-disable */
 export default {
   name: 'Window',
+  props: [
+      'config'
+  ],
   data: () => ({
     // TODO: Setear las variables y obtenerlas por props
-    config: {
-        title: 'Sin título',
-        icon: 'mc.png',
-        width: 500,
-        heigh: 100,
-        posx: 0,
-        posy: 0,
-    },
     wW: 0,
     wH: 0
   }),
   created() {
       this.wW = window.document.body.clientWidth
       this.wH = window.document.body.clientHeight
+
+      this.config.posx = (this.wW / 2) - (this.config.width / 2)
+      this.config.posy = ((this.wH - 50) / 2) - (this.config.height / 2)
+
   },
   methods: {
       dragElement: function(elmnt) {
@@ -130,15 +127,14 @@ export default {
 
     .window {
         position: absolute;
-        width: 50px;
         max-width: 100%;
         min-width: 180px;
         min-height: 80px;
         padding: 1px;
         padding: 0 5px 0; 
-        width: 300px;
         resize: both;
         overflow: hidden;
+        z-index: 99;
     }
 
     .window > .windowBar{
@@ -214,10 +210,14 @@ export default {
         display: flex;
         height: 100%;
         min-height: 50px;
+        justify-content: center;
+        justify-items: center;
+        align-content: center;
+        align-items: center;
     }
     .window > .windowBody > img {
-        height: auto;
-        width: 100%;
+        width: auto;
+        max-height: 50px;
     }
     
     /* TODO: Agregar on click a los estilos de la ventana */
