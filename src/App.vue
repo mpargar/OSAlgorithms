@@ -6,7 +6,9 @@
 </template>
 
 <script>
+/* eslint-disable */
 import Drive from './objects/Drive.js'
+// import Drive from './objects/File.js'
 import StateBar from './components/StateBar.vue'
 import WindowFrame from './components/WindowFrame.vue'
 
@@ -26,16 +28,28 @@ export default {
 </script>
 
 <style>
-*{
+
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('./assets/fonts/Segoe UI.ttf');
+}
+
+* {
   padding: 0;
   margin: 0;
 }
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Segoe UI';
   background-image: url('./assets/img/bg.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   position: relative;
+  overflow: hidden;
+}
+img{
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
 }
 </style>
