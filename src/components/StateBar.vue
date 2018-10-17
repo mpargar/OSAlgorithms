@@ -1,7 +1,7 @@
 <template>
   <div class="bar">
     <!-- Windows Button -->
-    <span id="windowsLogo">
+    <span id="windowsLogo" @click="startButton = !startButton" :class="startButton?'active':''">
       <svg width="1988" height="1992" viewBox="0 0 1988 1992" fill="white" xmlns="http://www.w3.org/2000/svg">
         <path d="M816 170L0 286V950H816V170Z"/>
         <path d="M1988 0L914 154V950L1988 938V0Z"/>
@@ -17,8 +17,13 @@
 export default {
   name: 'Bar',
   data: () => ({
-    openedSoftware: []
-  })
+    startButton: false
+  }),
+  watch: {
+    startButton: function() {
+      this.$root.$emit('start-button-pressed', this.startButton)
+    }
+  }
 }
 </script>
 
@@ -56,8 +61,20 @@ export default {
   background: rgba(255, 255, 255, 0.354);
 }
 
+#windowsLogo:active {
+  background: rgba(255, 255, 255, 0.197);
+}
+
+#windowsLogo.active {
+  background: rgba(255, 255, 255, 0.400);
+}
+
 #windowsLogo:hover > svg {
   fill: #5CDCE6;
+}
+
+#windowsLogo:active > svg {
+  fill: #00b7c3;
 }
 
 </style>

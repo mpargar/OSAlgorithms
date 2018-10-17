@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <WindowFrame
+    <!-- <WindowFrame
       :config="{
         title: 'Sin título',
         icon: 'mc.png',
@@ -8,7 +8,9 @@
         height: 500,
         posx: 0,
         posy: 0,
-      }"/>
+      }"/> -->
+    <WindowsMenu
+      :softwareProp="software"/>
     <StateBar/>
   </div>
 </template>
@@ -19,17 +21,24 @@ import Drive from './objects/Drive.js'
 // import Drive from './objects/File.js'
 import StateBar from './components/StateBar.vue'
 import WindowFrame from './components/WindowFrame.vue'
+import WindowsMenu from './components/Menu.vue'
 
 export default {
   name: 'app',
   components: {
     StateBar,
-    WindowFrame
+    WindowFrame,
+    WindowsMenu
   },
   data: () => ({
     software: Drive.loadDefaultSoftware(),
     opened: ["Hola"]
   }),
+  created(){
+    for(let i in this.software){
+      this.software[i]
+    }
+  },
   mounted: function () {
   }
 }

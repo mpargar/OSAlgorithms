@@ -45,7 +45,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: 'Window',
+  name: 'WindowFrame',
   props: [
       'config'
   ],
@@ -181,20 +181,28 @@ export default {
         display: flex;
         align-items: center;
         align-content: center;
-        transition: all ease-in-out 0.2s;
+        transition: all ease-in-out 0.1s;
         background: white;
     }
 
     .window > .windowBar > .windowButtons > li > svg {
-        transition: all ease-in-out 0.2s;
+        transition: all ease-in-out 0.1s;
     }
 
     .window > .windowBar > .windowButtons > li:hover {
         background: #ececec;
     }
 
+    .window > .windowBar > .windowButtons > li:active {
+        background: #cacacb;
+    }
+
     .window > .windowBar > .windowButtons > li:last-child:hover {
         background: #e81123;
+    }
+    
+    .window > .windowBar > .windowButtons > li:last-child:active {
+        background: #f1707a;
     }
 
     .window > .windowBar > .windowButtons > li:last-child:hover > svg{
