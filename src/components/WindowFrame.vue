@@ -1,5 +1,5 @@
 <template>
-    <div class="window" ref="windowFrame" :style="`top: ${config.posy}px; left: ${config.posx}px; width: ${config.width}px; height: ${config.height}px;`">
+    <div class="window" ref="windowFrame" :style="`top: ${config.posy}px; left: ${config.posx}px; width: ${config.width}px; height: ${config.height}px;`" @mousedown="frameClicked()">
       <!-- Barra -->
         <div class="windowBar" ref="windowFrameHeader">
           <!--  -->
@@ -63,6 +63,10 @@ export default {
 
   },
   methods: {
+      frameClicked(){
+          console.log("HOLA");
+          
+      },
       dragElement: function(elmnt) {
 
         var _this = this
@@ -123,7 +127,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
 
     .window {
         position: absolute;
@@ -135,100 +139,83 @@ export default {
         resize: both;
         overflow: hidden;
         z-index: 99;
+        .windowBar{
+            min-height: 30px;
+            max-height: 30px;
+            background: white;
+            width: 100%;
+            display: flex;
+            align-content: center;
+            align-items: center;
+            justify-content: space-between;
+            .windowName{
+                user-select: none;
+                cursor: default;
+                padding-left: 15px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: flex;
+                align-items: center;
+                align-content: center;
+                > img{
+                    max-width: 15px;
+                    max-height: 15px;
+                    margin-right: 5px;
+                }
+            }
+            .windowButtons{
+                list-style: none;
+                display: flex;
+                align-content: center;
+                align-items: center;
+                height: 30px;
+                > li {
+                    height: 30px;
+                    padding: 0 15px;
+                    display: flex;
+                    align-items: center;
+                    align-content: center;
+                    transition: all ease-in-out 0.1s;
+                    background: white;
+                    &:hover {
+                        background: #ececec;
+                    }
+                    &:active {
+                        background: #cacacb;
+                    }
+                    &:last-child:hover {
+                        background: #e81123;
+                        > svg{
+                            fill: white;
+                        }
+                    }
+                    
+                    &:last-child:active {
+                        background: #f1707a;
+                    }
+                    > svg {
+                        transition: all ease-in-out 0.1s;
+                        max-width: 10px;
+                        max-height: 10px;
+                    }
+                }
+            }
+        }
+        .windowBody {
+            background: #ececec;
+            display: flex;
+            height: 100%;
+            min-height: 50px;
+            justify-content: center;
+            justify-items: center;
+            align-content: center;
+            align-items: center;
+            > img {
+                width: auto;
+                max-height: 50px;
+            }
+        }
     }
-
-    .window > .windowBar{
-        min-height: 30px;
-        max-height: 30px;
-        background: white;
-        width: 100%;
-        display: flex;
-        align-content: center;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .window > .windowBar > .windowName{
-        user-select: none;
-        cursor: default;
-        padding-left: 15px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: flex;
-        align-items: center;
-        align-content: center;
-
-    }
-
-    .window > .windowBar > .windowName > img{
-        max-width: 15px;
-        max-height: 15px;
-        margin-right: 5px;
-    }
-
-    .window > .windowBar > .windowButtons{
-        list-style: none;
-        display: flex;
-        align-content: center;
-        align-items: center;
-        height: 30px;
-    }
-    
-    .window > .windowBar > .windowButtons > li {
-        height: 30px;
-        padding: 0 15px;
-        display: flex;
-        align-items: center;
-        align-content: center;
-        transition: all ease-in-out 0.1s;
-        background: white;
-    }
-
-    .window > .windowBar > .windowButtons > li > svg {
-        transition: all ease-in-out 0.1s;
-    }
-
-    .window > .windowBar > .windowButtons > li:hover {
-        background: #ececec;
-    }
-
-    .window > .windowBar > .windowButtons > li:active {
-        background: #cacacb;
-    }
-
-    .window > .windowBar > .windowButtons > li:last-child:hover {
-        background: #e81123;
-    }
-    
-    .window > .windowBar > .windowButtons > li:last-child:active {
-        background: #f1707a;
-    }
-
-    .window > .windowBar > .windowButtons > li:last-child:hover > svg{
-        fill: white;
-    }
-
-    .window > .windowBar > .windowButtons > li > svg {
-        max-width: 10px;
-        max-height: 10px;
-    }
-    .window > .windowBody {
-        background: #ececec;
-        display: flex;
-        height: 100%;
-        min-height: 50px;
-        justify-content: center;
-        justify-items: center;
-        align-content: center;
-        align-items: center;
-    }
-    .window > .windowBody > img {
-        width: auto;
-        max-height: 50px;
-    }
-    
-    /* TODO: Agregar on click a los estilos de la ventana */
-
 
 </style>

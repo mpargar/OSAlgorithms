@@ -1,20 +1,21 @@
 <template>
+<!-- eslint-disable -->
   <div id="app">
-    <!-- <WindowFrame
-      :config="{
-        title: 'Sin título',
-        icon: 'mc.png',
-        width: 500,
-        height: 500,
-        posx: 0,
-        posy: 0,
-      }"/> -->
+    <template v-for="(e, i) in processes">
+      <WindowFrame
+        :config="{
+          title: e.name,
+          icon: e.image.name+'.'+e.image.ext,
+          width: 300,
+          height: 300
+        }"/>
+    </template>
     <WindowsMenu
-      :softwareProp="software"/>
+      :softwareProp="software"
+      :processes="processes"/>
     <StateBar/>
   </div>
 </template>
-
 <script>
 /* eslint-disable */
 import Drive from './objects/Drive.js'
@@ -32,7 +33,8 @@ export default {
   },
   data: () => ({
     software: Drive.loadDefaultSoftware(),
-    opened: ["Hola"]
+    processes: [],
+    frameZindexCounter: 0
   }),
   created(){
     for(let i in this.software){

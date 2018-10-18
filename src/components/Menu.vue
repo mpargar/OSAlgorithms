@@ -1,15 +1,20 @@
 <template>
-  <div :class="'menu' + opened">
+<!-- eslint-disable -->
+  <div ref="windowsMenu" :class="'menu' + opened">
     <!-- Windows Button -->
     <div class="options">
         TEST
     </div>
     <ul class="programs">
-        <li v-for="(e) in software">
-            <!-- <img :src="require(`@/assets/icons/${e.image.name}${e.image.ext}`)"> -->
-            <span>
-                {{ e.name }}
-            </span>
+        <li v-for="(e) in software" @click="processes.push(e)">
+            <div class="contentContainer">
+                <span class="optionImg">
+                    <img :src="require(`@/assets/icons/${e.image.name}.${e.image.ext}`)">
+                </span>
+                <span class="text">
+                    {{ e.name }}
+                </span>
+            </div>
         </li> 
     </ul>
   </div>
@@ -18,7 +23,10 @@
 <script>
 export default {
   name: 'Menu',
-  props: ['softwareProp'],
+  props: [
+      'softwareProp',
+      'processes'
+  ],
   data: function() {
     return {
         opened: '',
@@ -36,7 +44,11 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
+    *{
+        -webkit-user-select: none;
+        cursor: default;
+    }
     .menu{
         background: rgba(0, 0, 0, 0.88);
         position: fixed;
@@ -49,25 +61,57 @@ export default {
         opacity: 0;
         z-index: 99;
         display: flex;
+        .options{
+            height: 100%;
+            width: 70px;
+        } 
+        .programs{
+            height: 100%;
+            width: 100%;
+            padding: 5px;
+            >li{
+                display: flex;
+                align-items: center;
+                margin: 6px 0;
+                padding: 5px;
+                &:hover{
+                    background: rgba(255, 255, 255, 0.354);
+                }
+                &:active{
+                    .contentContainer{
+                        transform: scale(0.98);
+                    }
+                }
+                .contentContainer{
+                    display: flex;
+                    align-items: center;
+                    .optionImg{
+                        background: #00b7c3;
+                        width: 40px;
+                        height: 40px;
+                        display: flex;
+                        justify-items: center;
+                        justify-content: center;
+                        align-items: center;
+                        align-content: center;
+                        margin-right: 10px;
+                        >img{
+                            max-width: 35px;
+                            max-height: 35px;
+                        }
+                    }
+                    .text{
+                        color: white;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
     }
     .opened{
         height: 500px;
         opacity: 1;
     }
-    .menu > .options{
-        height: 100%;
-        width: 70px;
-    }
-    .menu > .programs{
-        height: 100%;
-        width: 100%;
-    }
 
-    .menu > .programs > li{
-        display: flex;
-    }
-    .menu > .programs > li > span{
-        color: white;
-    }
     
 </style>
