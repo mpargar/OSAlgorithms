@@ -12,7 +12,10 @@ export default {
                 name: imgName,
                 ext: imgExt
             },
-            tags: this.fillTags(n, customTags)
+            tags: this.fillTags(n, customTags),
+            created: '',
+            rafaga: '',
+            llegada: ''
         }
     },
     loadDefaultSoftware: function () {

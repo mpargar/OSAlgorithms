@@ -26,7 +26,7 @@
                         <rect x="632" y="1" width="58" height="571" fill="black"/>
                     </svg>
                 </li>
-                <li>
+                <li @click="closeFrame()">
                     <svg width="714" height="714" viewBox="0 0 714 714" fill="black" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0.861084 667.884L668.325 0.419538L713.58 45.6744L46.1159 713.139L0.861084 667.884Z"/>
                         <path d="M0.861084 667.884L668.325 0.419538L713.58 45.6744L46.1159 713.139L0.861084 667.884Z"/>
@@ -36,18 +36,27 @@
                 </li>
             </ul>
         </div>
-        <div class="windowBody">
+        <div class="windowBody" v-if="config.processId || config.processId == 0 ">
             <img :src="require(`@/assets/icons/${config.icon}`)">
+        </div>
+        <div class="taskBody" v-if="config.program =='taskManager'">
+            <TaskManager
+                :processes="processes"/>
         </div>
     </div>
 </template>
 
 <script>
 /* eslint-disable */
+import TaskManager from './programs/TaskManager/index.vue'
 export default {
   name: 'WindowFrame',
+  components: {
+      TaskManager,
+  },
   props: [
-      'config'
+      'config',
+      'processes'
   ],
   data: () => ({
     // TODO: Setear las variables y obtenerlas por props
@@ -63,9 +72,13 @@ export default {
 
   },
   methods: {
+      closeFrame(){
+          if(this.config.processId || this.config.processId == 0){
+              this.config.processes.splice(this.config.processId, 1);
+          }
+      },
       frameClicked(){
-          console.log("HOLA");
-          
+            console.log("HOLA");
       },
       dragElement: function(elmnt) {
 
@@ -134,11 +147,10 @@ export default {
         max-width: 100%;
         min-width: 180px;
         min-height: 80px;
-        padding: 1px;
-        padding: 0 5px 0; 
         resize: both;
         overflow: hidden;
         z-index: 99;
+        border: solid 1px #00000074;
         .windowBar{
             min-height: 30px;
             max-height: 30px;
@@ -205,16 +217,26 @@ export default {
         .windowBody {
             background: #ececec;
             display: flex;
-            height: 100%;
+            height: calc(100% - 30px);
             min-height: 50px;
             justify-content: center;
             justify-items: center;
             align-content: center;
             align-items: center;
+            overflow-y: scroll;
             > img {
                 width: auto;
                 max-height: 50px;
             }
+        }
+        .taskBody{
+            background: #ececec;
+            display: flex;
+            height: calc(100% - 30px);
+            min-height: 50px;
+            justify-content: center;
+            justify-items: center;
+            overflow-y: scroll;
         }
     }
 

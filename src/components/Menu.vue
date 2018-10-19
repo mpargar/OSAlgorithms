@@ -6,7 +6,7 @@
         TEST
     </div>
     <ul class="programs">
-        <li v-for="(e) in software" @click="processes.push(e)">
+        <li v-for="(e) in software" @click="addToProcesses(e)">
             <div class="contentContainer">
                 <span class="optionImg">
                     <img :src="require(`@/assets/icons/${e.image.name}.${e.image.ext}`)">
@@ -39,6 +39,13 @@ export default {
       this.$root.$on('start-button-pressed', (emision) => {
           _this.opened = emision? ' opened' : ''
       })
+  },
+  methods: {
+      addToProcesses(e){
+          let element = Object.assign({}, e);
+          element.created = new Date()
+          this.processes.push(element)
+      }
   }
 }
 </script>
