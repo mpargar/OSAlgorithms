@@ -13,6 +13,7 @@
       :processes="processes" />
     <template v-for="(e, i) in processes">
       <WindowFrame
+        :key="i"
         :config="{
           title: e.name,
           icon: e.image.name+'.'+e.image.ext,

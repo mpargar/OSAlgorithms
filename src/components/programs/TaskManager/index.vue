@@ -29,7 +29,11 @@
                         {{ e.name }}
                     </div>
                     <span>Rafaga: <input type="text" v-model="e.rafaga" :size="e.rafaga.length">ms</span>
-                    <span>Llegada: {{ i==0? 0 : e.created - processes[0].created }}ms</span>
+                    <span>Llegada: {{ calcLlegada(i) }}ms</span>
+                    <span v-if="option==5">Prioridad: <input type="text" v-model="e.prioridad"></span>
+                </li>
+                <li v-if="option == 4">
+                    <span>Quantum: <input type="text" v-model="quantum"></span>
                 </li>
             </ul>
             <div class="procesos error" v-else>
@@ -75,8 +79,7 @@
                 tEp: 0,
                 tRp: 0,
                 eficP: 0,
-                 
-
+                quantum: 0
             }
         },
         created(){
@@ -86,6 +89,21 @@
 
         },
         methods:{
+            makeEmpty(last, next){
+                return {
+                    image: {
+                        ext: 'svg',
+                        name: 'empty'
+                    }, 
+                    lim: [
+                        last,
+                        next
+                    ]
+                }
+            },
+            calcLlegada(i){
+                return i==0? 0 : this.processes[i].created - this.processes[0].created
+            },
             clear(){
                 this.gant = Object.assign([], [])
                 this.processesCopy = Object.assign([], [])
@@ -94,70 +112,52 @@
                 this.eficP = 0
             },
             go(){
+                this.clear()
+                var _this = this
+                this.processesCopy = Object.assign([], this.processes)
                 switch (this.option) {
                     case '1':
-                        this.fcfs()            
+                        this.fcfs()      
                         break;
                     case '2':
                         this.sjf()
                         break;
                     case '3':
-                        
+                        this.srt()
                         break;
                     case '4':
-                        
+                        this.rr()
                         break;
                     case '5':
-                        
+                        this.pp()                        
                         break;
                 }
             },
             fcfs(){
-                this.clear()
-                var _this = this
-                this.processesCopy = Object.assign([], this.processes)
-                this.gant = this.processesCopy.map((e, i, a) => {
-                    e.lim = i==0? [0, parseInt(e.rafaga)] : [parseInt(a[i-1].lim[1]),(parseInt(a[i-1].lim[1]) + parseInt(e.rafaga))]
-                    e.tE = e.lim[0]
+                var _this = this;
+                this.processesCopy.forEach((e, i, a) => {
+                    if (i == 0) {
+                        e.lim = [0, parseInt(e.rafaga)]
+                    } else {
+                        if(_this.gant[_this.gant.length - 1].lim[1] < _this.calcLlegada(i)){
+                            _this.gant.push(
+                                /*              ANTERIOR                                  SIGUIENTE */
+                                _this.makeEmpty(_this.gant[_this.gant.length - 1].lim[1], _this.calcLlegada(i))
+                            )
+                        } 
+                        e.lim = [parseInt(_this.gant[_this.gant.length - 1].lim[1]),(parseInt(_this.gant[_this.gant.length - 1].lim[1]) + parseInt(e.rafaga))]
+                    }
+                    e.tE = e.lim[0] - (e.lim[0]==0? 0 : e.created - _this.processes[0].created)
                     e.tR = e.lim[1]
                     e.efic = (parseInt(e.rafaga) / e.tR)*100
-                    return e
+                    _this.gant.push(e)
                 })
-                this.processesCopy = this.gant;
-                this.processesCopy.forEach(e => {
-                    _this.tEp += parseFloat(e.tE)
-                    _this.tRp += parseFloat(e.tR)
-                    _this.eficP += parseFloat(e.efic)
-                })
-                
-                this.tEp = this.tEp / this.processesCopy.length
-                this.tRp = this.tRp / this.processesCopy.length
-                this.eficP = (this.eficP / this.processesCopy.length).toFixed(2)
             },
             sjf(){
-                this.clear()
-                var _this = this
-                this.processesCopy = Object.assign([], this.processes)
-                this.processesCopy.sort(function(a, b) {
-                    return a.rafaga - b.rafaga;
-                });
-                this.gant = this.processesCopy.map((e, i, a) => {
-                    e.lim = i==0? [0, parseInt(e.rafaga)] : [parseInt(a[i-1].lim[1]),(parseInt(a[i-1].lim[1]) + parseInt(e.rafaga))]
-                    e.tE = e.lim[0]
-                    e.tR = e.lim[1]
-                    e.efic = (parseInt(e.rafaga) / e.tR)*100
-                    return e
-                })
-                this.processesCopy = this.gant;
-                this.processesCopy.forEach(e => {
-                    _this.tEp += parseFloat(e.tE)
-                    _this.tRp += parseFloat(e.tR)
-                    _this.eficP += parseFloat(e.efic)
-                })
-                this.tEp = this.tEp / this.processesCopy.length
-                this.tRp = this.tRp / this.processesCopy.length
-                this.eficP = (this.eficP / this.processesCopy.length).toFixed(2)
-            }
+            },
+            srt(){},
+            rr(){},
+            pp(){}
         }
     }
 </script>

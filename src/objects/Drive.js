@@ -15,7 +15,8 @@ export default {
             tags: this.fillTags(n, customTags),
             created: '',
             rafaga: '',
-            llegada: ''
+            llegada: '',
+            prioridad: ''
         }
     },
     loadDefaultSoftware: function () {
